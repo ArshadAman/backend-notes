@@ -35,39 +35,103 @@ async function init() {
     setupMarked();
     setupEventListeners();
     fetchInstagramStats();
+    setInterval(fetchInstagramStats, 10 * 60 * 1000);
     await fetchNotesList();
     handleRoute();
     setupScrollEngagement();
 }
 
 // ==================== INSTAGRAM STATS ====================
+function formatCompactNumber(num) {
+    if (!Number.isFinite(num)) return '';
+    if (num >= 1_000_000) {
+        const value = num / 1_000_000;
+        return `${value >= 10 ? value.toFixed(0) : value.toFixed(1).replace(/\.0$/, '')}M`;
+    }
+    if (num >= 1_000) {
+        const value = num / 1_000;
+        return `${value >= 10 ? value.toFixed(0) : value.toFixed(1).replace(/\.0$/, '')}K`;
+    }
+    return String(num);
+}
+
+function updateInstagramCounts(followers, following) {
+    if (followers !== undefined && followers !== null) {
+        const followersText = formatCompactNumber(Number(followers));
+        document.querySelectorAll('.ig-followers-count').forEach((el) => {
+            el.textContent = followersText;
+        });
+    }
+
+    if (following !== undefined && following !== null) {
+        const followingText = formatCompactNumber(Number(following));
+        document.querySelectorAll('.ig-following-count').forEach((el) => {
+            el.textContent = followingText;
+        });
+    }
+}
+
+function updateInstagramAvatar(imageUrl) {
+    if (!imageUrl) return;
+    document.querySelectorAll('.ig-avatar-img').forEach((img) => {
+        img.src = imageUrl;
+    });
+}
+
+function extractInstagramStats(payload) {
+    const user = payload?.data?.user || payload?.user;
+    if (!user) return null;
+
+    const followers = user?.edge_followed_by?.count ?? user?.follower_count;
+    const following = user?.edge_follow?.count ?? user?.following_count;
+    const avatar = user?.profile_pic_url_hd || user?.profile_pic_url;
+
+    if (!Number.isFinite(Number(followers)) || !Number.isFinite(Number(following))) {
+        return null;
+    }
+
+    return { followers, following, avatar };
+}
+
 async function fetchInstagramStats() {
     try {
-        const targetUrl = 'https://www.instagram.com/the.he24/';
-        const proxyUrl = `https://api.allorigins.win/get?url=${encodeURIComponent(targetUrl)}`;
-        const response = await fetch(proxyUrl);
-        const data = await response.json();
-        
-        if (data.contents) {
-            // Followers / Following
-            const match = data.contents.match(/content="([0-9,KMB]+)\s+Followers,\s+([0-9,KMB]+)\s+Following/i) || 
-                          data.contents.match(/"([0-9,KMB]+)\s+Followers,\s+([0-9,KMB]+)\s+Following/i);
-            if (match) {
-                document.querySelectorAll('.ig-followers-count').forEach(el => el.textContent = match[1]);
-                document.querySelectorAll('.ig-following-count').forEach(el => el.textContent = match[2]);
+        // Preferred path: server-side proxy endpoint (Netlify function) for true live counts.
+        const proxyResponse = await fetch('/.netlify/functions/instagram-stats', {
+            cache: 'no-store'
+        });
+
+        if (proxyResponse.ok) {
+            const proxyData = await proxyResponse.json();
+            if (proxyData?.followers !== undefined && proxyData?.following !== undefined) {
+                updateInstagramCounts(proxyData.followers, proxyData.following);
             }
-            
-            // Profile Image from og:image
-            const imgMatch = data.contents.match(/<meta\s+property=["']og:image["']\s+content=["']([^"']+)["']/i);
-            if (imgMatch && imgMatch[1]) {
-                const avatarUrl = imgMatch[1].replace(/&amp;/g, '&');
-                document.querySelectorAll('.ig-avatar-img').forEach(img => {
-                    img.src = avatarUrl;
-                });
-            }
+            updateInstagramAvatar(proxyData?.avatar);
+            return;
         }
     } catch (e) {
-        console.warn('Could not fetch live stats:', e);
+        // Continue to fallback parsing below.
+    }
+
+    try {
+        // Fallback: best-effort parse from profile HTML when proxy is unavailable.
+        const targetUrl = 'https://www.instagram.com/the.he24/';
+        const proxyUrl = `https://api.allorigins.win/raw?url=${encodeURIComponent(targetUrl)}`;
+        const response = await fetch(proxyUrl, { cache: 'no-store' });
+        const html = await response.text();
+
+        if (html) {
+            const sharedDataMatch = html.match(/"edge_followed_by"\s*:\s*\{\s*"count"\s*:\s*(\d+).*?"edge_follow"\s*:\s*\{\s*"count"\s*:\s*(\d+)/s);
+            if (sharedDataMatch) {
+                updateInstagramCounts(Number(sharedDataMatch[1]), Number(sharedDataMatch[2]));
+            }
+
+            const imgMatch = html.match(/<meta\s+property=["']og:image["']\s+content=["']([^"']+)["']/i);
+            if (imgMatch && imgMatch[1]) {
+                updateInstagramAvatar(imgMatch[1].replace(/&amp;/g, '&'));
+            }
+        }
+    } catch (fallbackError) {
+        console.warn('Could not fetch live Instagram stats:', fallbackError);
     }
 }
 

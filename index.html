@@ -473,6 +473,50 @@
             }
         }
 
+        @keyframes noteSweep {
+            0% {
+                transform: translateX(-140%) rotate(10deg);
+                opacity: 0;
+            }
+
+            18% {
+                opacity: 0.32;
+            }
+
+            82% {
+                opacity: 0.32;
+            }
+
+            100% {
+                transform: translateX(180%) rotate(10deg);
+                opacity: 0;
+            }
+        }
+
+        @keyframes noteDotPulse {
+            0%,
+            100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+
+            50% {
+                transform: scale(1.35);
+                opacity: 0.7;
+            }
+        }
+
+        @keyframes noteArrowNudge {
+            0%,
+            100% {
+                transform: translateX(0);
+            }
+
+            50% {
+                transform: translateX(2px);
+            }
+        }
+
         .note-card-float {
             animation: noteFloat 7s ease-in-out infinite;
         }
@@ -484,6 +528,41 @@
 
         .note-card-orb {
             animation: noteOrbDrift 8s ease-in-out infinite;
+        }
+
+        .note-card-sweep {
+            animation: noteSweep 5.5s ease-in-out infinite;
+        }
+
+        .note-card-dot {
+            animation: noteDotPulse 2.2s ease-in-out infinite;
+            transform-origin: center;
+        }
+
+        .note-card-arrow {
+            animation: noteArrowNudge 2.6s ease-in-out infinite;
+        }
+
+        @media (max-width: 768px) {
+            .note-card-shimmer {
+                animation: none;
+                background-size: 100% 100%;
+            }
+
+            .note-card-orb {
+                animation: none;
+                opacity: 0.45;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .note-card-shimmer,
+            .note-card-orb,
+            .note-card-sweep,
+            .note-card-dot,
+            .note-card-arrow {
+                animation: none !important;
+            }
         }
 
         /* Story ring */

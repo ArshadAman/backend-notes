@@ -121,13 +121,12 @@ function renderNotesGrid(notes) {
 
     notes.forEach((note, idx) => {
         const gradient = cardGradients[idx % cardGradients.length];
-        const floatDelay = `${(idx % 6) * 0.18}s`;
 
         // Card container
         const item = document.createElement('a');
         item.href = `#${note.filename.replace('.md', '')}`;
         item.className = [
-            'gsap-card note-card-float group relative aspect-square',
+            'gsap-card group relative aspect-square',
             'cursor-pointer block overflow-hidden rounded-2xl',
             'border border-black/5 dark:border-white/10',
             'shadow-[0_12px_30px_rgba(15,23,42,0.08)] dark:shadow-[0_18px_40px_rgba(0,0,0,0.35)]',
@@ -138,7 +137,6 @@ function renderNotesGrid(notes) {
             'bg-cover bg-center note-card-shimmer'
         ].join(' ');
         item.style.backgroundImage = gradient;
-        item.style.animationDelay = floatDelay;
 
         // Title
         const titleClasses = [
@@ -168,18 +166,19 @@ function renderNotesGrid(notes) {
         ].join(' ');
 
         item.innerHTML = `
+            <div class="note-card-sweep absolute -left-[42%] top-[-24%] z-[1] h-[150%] w-[42%] rotate-[10deg] bg-gradient-to-r from-transparent via-white/45 to-transparent pointer-events-none"></div>
             <div class="note-card-orb absolute -right-8 -top-8 h-28 w-28 rounded-full bg-white/40 blur-3xl pointer-events-none"></div>
             <div class="note-card-orb absolute -left-6 bottom-0 h-20 w-20 rounded-full bg-[#0095f6]/18 blur-3xl pointer-events-none" style="animation-delay: -2.4s"></div>
             <div class="absolute inset-0 z-10 flex flex-col justify-between p-4 md:p-5">
                 <div class="flex items-start justify-between gap-3">
                     <span class="${metaClasses}">Note ${String(idx + 1).padStart(2, '0')}</span>
-                    <span class="inline-flex h-9 w-9 items-center justify-center rounded-full border border-white/75 bg-white/80 text-[#0f172a] shadow-sm backdrop-blur-sm">
+                    <span class="note-card-arrow inline-flex h-9 w-9 items-center justify-center rounded-full border border-white/75 bg-white/80 text-[#0f172a] shadow-sm backdrop-blur-sm">
                         →
                     </span>
                 </div>
                 <div class="space-y-3">
                     <div class="flex items-center gap-2 text-[11px] md:text-[12px] font-medium ${filenameClasses}">
-                        <span class="h-2 w-2 rounded-full bg-[#0095f6]"></span>
+                        <span class="note-card-dot h-2 w-2 rounded-full bg-[#0095f6]"></span>
                         <span>${note.filename.replace('.md', '')}</span>
                     </div>
                     <h3 class="${titleClasses}">${note.title}</h3>

@@ -1,6 +1,5 @@
 # 🌐 Nginx: Senior Backend Engineer Reference
 
-**Target:** $20k+ USD Remote / Mid-to-Senior Backend Roles  
 **Core Philosophy:** Master the configuration blocks, connection limits, and performance tuning underlying a robust reverse proxy setup.
 
 ---

@@ -1,0 +1,67 @@
+[
+    {
+        "title": "Battlefield",
+        "filename": "battlefield.md",
+        "path": "notes/battlefield.md"
+    },
+    {
+        "title": "Db Scaling",
+        "filename": "db_scaling.md",
+        "path": "notes/db_scaling.md"
+    },
+    {
+        "title": "Docker",
+        "filename": "docker.md",
+        "path": "notes/docker.md"
+    },
+    {
+        "title": "Elasticsearch",
+        "filename": "elasticsearch.md",
+        "path": "notes/elasticsearch.md"
+    },
+    {
+        "title": "Fastapi",
+        "filename": "fastapi.md",
+        "path": "notes/fastapi.md"
+    },
+    {
+        "title": "Fault Tollerance",
+        "filename": "fault_tollerance.md",
+        "path": "notes/fault_tollerance.md"
+    },
+    {
+        "title": "Nginx",
+        "filename": "nginx.md",
+        "path": "notes/nginx.md"
+    },
+    {
+        "title": "Postgres",
+        "filename": "postgres.md",
+        "path": "notes/postgres.md"
+    },
+    {
+        "title": "Python",
+        "filename": "python.md",
+        "path": "notes/python.md"
+    },
+    {
+        "title": "Rabbitmq",
+        "filename": "rabbitmq.md",
+        "path": "notes/rabbitmq.md"
+    },
+    {
+        "title": "Redis",
+        "filename": "redis.md",
+        "path": "notes/redis.md"
+    },
+    {
+        "title": "Rest Design",
+        "filename": "rest_design.md",
+        "path": "notes/rest_design.md"
+    },
+    {
+        "title": "Security",
+        "filename": "security.md",
+        "path": "notes/security.md"
+    }
+]

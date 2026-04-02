@@ -1,6 +1,5 @@
 # 🧱 Database Scaling: Senior Backend Engineer Reference
 
-**Target:** $20k+ USD Remote / Mid-to-Senior Backend Roles  
 **Core Philosophy:** Anyone can add a replica. A Senior Engineer knows *when* to add it, *how* to route traffic to it, and the catastrophic *consequences* of replication lag and split-brain scenarios.
 
 ---

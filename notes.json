@@ -1,5 +1,10 @@
 [
     {
+        "title": "Read Me First",
+        "filename": "README.md",
+        "path": "README.md"
+    },
+    {
         "title": "Battlefield",
         "filename": "battlefield.md",
         "path": "notes/battlefield.md"

@@ -4,26 +4,6 @@
 
 ---
 
-## 📖 Table of Contents
-
-| Topic | File | Description |
-|---|---|---|
-| ⚔️ Technology Battlefield | [battlefield.md](battlefield.md) | Why each technology was chosen — trade-offs, not opinions |
-| 🧱 Database Scaling | [db_scaling.md](db_scaling.md) | Replicas, sharding, routing, and consequences of replication lag |
-| 🐳 Docker | [docker.md](docker.md) | Linux kernel internals, image optimisation, and container pitfalls |
-| 🔍 Elasticsearch | [elasticsearch.md](elasticsearch.md) | Inverted index, JVM heap tuning, and full-text search architecture |
-| ⚡ FastAPI & Concurrency | [fastapi.md](fastapi.md) | Async Python, the event loop, and avoiding blocking-call disasters |
-| 🛡️ Fault Tolerance | [fault_tollerance.md](fault_tollerance.md) | Circuit breakers, retries, and keeping systems alive when everything fails |
-| 🌐 Nginx | [nginx.md](nginx.md) | Reverse proxy configuration, connection limits, and performance tuning |
-| 🐘 PostgreSQL | [postgres.md](postgres.md) | Query planning, indexing, concurrency, and transactional correctness |
-| 🐍 Python | [python.md](python.md) | CPython memory model, MRO, GIL, and common language-level footguns |
-| 🐇 RabbitMQ | [rabbitmq.md](rabbitmq.md) | Message durability, service decoupling, and guaranteed delivery patterns |
-| 🔴 Redis | [redis.md](redis.md) | Caching, distributed locks, rate limiting, pub/sub, and failure modes |
-| 🌐 REST API Design | [rest_design.md](rest_design.md) | REST constraints, versioning, security, and designing for scale |
-| 🔐 Security | [security.md](security.md) | OWASP top risks, secure coding practices, and threat modelling |
-
----
-
 ## ⚠️ Important Disclaimers
 
 Before using any material in this repository, please read the following:
@@ -74,6 +54,27 @@ This repository is designed for engineers aiming for **mid-to-senior backend rol
 - Re-read periodically — your understanding will deepen with practical experience.
 
 ---
+
+## 📖 Table of Contents
+
+| Topic | File | Description |
+|---|---|---|
+| ⚔️ Technology Battlefield | [battlefield.md](battlefield.md) | Why each technology was chosen — trade-offs, not opinions |
+| 🧱 Database Scaling | [db_scaling.md](db_scaling.md) | Replicas, sharding, routing, and consequences of replication lag |
+| 🐳 Docker | [docker.md](docker.md) | Linux kernel internals, image optimisation, and container pitfalls |
+| 🔍 Elasticsearch | [elasticsearch.md](elasticsearch.md) | Inverted index, JVM heap tuning, and full-text search architecture |
+| ⚡ FastAPI & Concurrency | [fastapi.md](fastapi.md) | Async Python, the event loop, and avoiding blocking-call disasters |
+| 🛡️ Fault Tolerance | [fault_tollerance.md](fault_tollerance.md) | Circuit breakers, retries, and keeping systems alive when everything fails |
+| 🌐 Nginx | [nginx.md](nginx.md) | Reverse proxy configuration, connection limits, and performance tuning |
+| 🐘 PostgreSQL | [postgres.md](postgres.md) | Query planning, indexing, concurrency, and transactional correctness |
+| 🐍 Python | [python.md](python.md) | CPython memory model, MRO, GIL, and common language-level footguns |
+| 🐇 RabbitMQ | [rabbitmq.md](rabbitmq.md) | Message durability, service decoupling, and guaranteed delivery patterns |
+| 🔴 Redis | [redis.md](redis.md) | Caching, distributed locks, rate limiting, pub/sub, and failure modes |
+| 🌐 REST API Design | [rest_design.md](rest_design.md) | REST constraints, versioning, security, and designing for scale |
+| 🔐 Security | [security.md](security.md) | OWASP top risks, secure coding practices, and threat modelling |
+
+---
+
 
 ## 🤝 Contributing
 

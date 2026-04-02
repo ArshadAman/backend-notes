@@ -111,42 +111,85 @@ function renderNotesGrid(notes) {
 
     grid.innerHTML = '';
 
+    const cardGradients = [
+        'radial-gradient(circle at top left, rgba(0,149,246,0.22), transparent 38%), linear-gradient(145deg, #f8fafc 0%, #edf4ff 45%, #dfeeff 100%)',
+        'radial-gradient(circle at top left, rgba(220,38,38,0.20), transparent 38%), linear-gradient(145deg, #fff7ed 0%, #fff0f0 45%, #ffe4e6 100%)',
+        'radial-gradient(circle at top left, rgba(34,197,94,0.18), transparent 38%), linear-gradient(145deg, #f8fffb 0%, #edfdf4 45%, #dcfce7 100%)',
+        'radial-gradient(circle at top left, rgba(168,85,247,0.18), transparent 38%), linear-gradient(145deg, #faf5ff 0%, #f3e8ff 45%, #e9d5ff 100%)',
+        'radial-gradient(circle at top left, rgba(245,158,11,0.18), transparent 38%), linear-gradient(145deg, #fffdf5 0%, #fff7e6 45%, #fde68a 100%)'
+    ];
+
     notes.forEach((note, idx) => {
+        const gradient = cardGradients[idx % cardGradients.length];
+        const floatDelay = `${(idx % 6) * 0.18}s`;
 
         // Card container
         const item = document.createElement('a');
         item.href = `#${note.filename.replace('.md', '')}`;
         item.className = [
-            'gsap-card group relative aspect-square',
-            'cursor-pointer block overflow-hidden',
-            'border border-[#2a2a2a] hover:border-[#444]',
-            'transition-all duration-300',
-            'bg-[#141414] hover:bg-[#1a1a1a]'
+            'gsap-card note-card-float group relative aspect-square',
+            'cursor-pointer block overflow-hidden rounded-2xl',
+            'border border-black/5 dark:border-white/10',
+            'shadow-[0_12px_30px_rgba(15,23,42,0.08)] dark:shadow-[0_18px_40px_rgba(0,0,0,0.35)]',
+            'transition-all duration-300 ease-out',
+            'hover:-translate-y-1 hover:shadow-[0_18px_38px_rgba(15,23,42,0.14)] dark:hover:shadow-[0_24px_50px_rgba(0,0,0,0.45)]',
+            'before:absolute before:inset-0 before:bg-[radial-gradient(circle_at_top_right,rgba(255,255,255,0.58),transparent_42%)] before:opacity-70 dark:before:opacity-25',
+            'after:absolute after:inset-x-0 after:bottom-0 after:h-1 after:bg-gradient-to-r after:from-transparent after:via-[#0095f6]/55 after:to-transparent after:opacity-0 after:transition-opacity after:duration-300',
+            'bg-cover bg-center note-card-shimmer'
         ].join(' ');
+        item.style.backgroundImage = gradient;
+        item.style.animationDelay = floatDelay;
 
         // Title
         const titleClasses = [
-            'text-[#e0e0e0] group-hover:text-white',
-            'font-semibold text-[14px] md:text-[18px]',
-            'leading-snug tracking-tight',
+            'text-[#0f172a] dark:text-[#0f172a] group-hover:text-[#020617]',
+            'font-semibold text-[15px] md:text-[19px]',
+            'leading-snug tracking-tight drop-shadow-[0_1px_0_rgba(255,255,255,0.45)]',
             'transition-colors duration-300'
+        ].join(' ');
+
+        const metaClasses = [
+            'inline-flex items-center gap-1.5 rounded-full px-2.5 py-1',
+            'text-[10px] md:text-[11px] font-semibold uppercase tracking-[0.18em]',
+            'bg-white/75 text-[#334155] backdrop-blur-sm',
+            'border border-white/70 shadow-sm'
+        ].join(' ');
+
+        const filenameClasses = [
+            'text-[#475569]',
+            'dark:text-[#334155]'
         ].join(' ');
 
         // Hover overlay
         const overlayClasses = [
             'absolute inset-0 opacity-0 group-hover:opacity-100',
-            'transition-all duration-400 bg-black/60',
-            'flex items-center justify-center z-20'
+            'transition-all duration-300 bg-gradient-to-t from-black/55 via-black/20 to-transparent',
+            'flex items-end justify-start z-20'
         ].join(' ');
 
         item.innerHTML = `
-            <div class="absolute inset-0 flex flex-col items-center justify-center p-4 md:p-6 text-center z-10">
-                <h3 class="${titleClasses}">${note.title}</h3>
+            <div class="note-card-orb absolute -right-8 -top-8 h-28 w-28 rounded-full bg-white/40 blur-3xl pointer-events-none"></div>
+            <div class="note-card-orb absolute -left-6 bottom-0 h-20 w-20 rounded-full bg-[#0095f6]/18 blur-3xl pointer-events-none" style="animation-delay: -2.4s"></div>
+            <div class="absolute inset-0 z-10 flex flex-col justify-between p-4 md:p-5">
+                <div class="flex items-start justify-between gap-3">
+                    <span class="${metaClasses}">Note ${String(idx + 1).padStart(2, '0')}</span>
+                    <span class="inline-flex h-9 w-9 items-center justify-center rounded-full border border-white/75 bg-white/80 text-[#0f172a] shadow-sm backdrop-blur-sm">
+                        →
+                    </span>
+                </div>
+                <div class="space-y-3">
+                    <div class="flex items-center gap-2 text-[11px] md:text-[12px] font-medium ${filenameClasses}">
+                        <span class="h-2 w-2 rounded-full bg-[#0095f6]"></span>
+                        <span>${note.filename.replace('.md', '')}</span>
+                    </div>
+                    <h3 class="${titleClasses}">${note.title}</h3>
+                </div>
             </div>
             <div class="${overlayClasses}">
-                <span class="text-white text-[13px] md:text-[14px] font-semibold tracking-wide">Read →</span>
+                <span class="m-4 md:m-5 inline-flex items-center rounded-full bg-white/95 px-3 py-1.5 text-[12px] font-semibold text-[#0f172a] shadow-lg shadow-black/10">
+                    Read note
+                </span>
             </div>
-            <div class="absolute bottom-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-[#0095f6]/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
         `;
 
         grid.appendChild(item);

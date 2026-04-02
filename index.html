@@ -441,6 +441,51 @@
             animation: fadeIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
         }
 
+        @keyframes noteFloat {
+            0%,
+            100% {
+                transform: translateY(0) scale(1);
+            }
+
+            50% {
+                transform: translateY(-4px) scale(1.01);
+            }
+        }
+
+        @keyframes noteShimmer {
+            0% {
+                background-position: -160% 0;
+            }
+
+            100% {
+                background-position: 160% 0;
+            }
+        }
+
+        @keyframes noteOrbDrift {
+            0%,
+            100% {
+                transform: translate3d(0, 0, 0) scale(1);
+            }
+
+            50% {
+                transform: translate3d(10px, -8px, 0) scale(1.06);
+            }
+        }
+
+        .note-card-float {
+            animation: noteFloat 7s ease-in-out infinite;
+        }
+
+        .note-card-shimmer {
+            background-size: 220% 100%;
+            animation: noteShimmer 6s linear infinite;
+        }
+
+        .note-card-orb {
+            animation: noteOrbDrift 8s ease-in-out infinite;
+        }
+
         /* Story ring */
         .story-ring {
             position: relative;
